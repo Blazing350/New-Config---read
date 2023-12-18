@@ -1,0 +1,32 @@
+    \n\r\
+    \n#GetDate\r\
+    \n:local GDate [/system clock get date]\r\
+    \n:local GDay [ :pick \$GDate 4 6 ]\r\
+    \n:local GMonth [ :pick \$GDate 0 3 ]\r\
+    \n:local GYear [ :pick \$GDate 7 11 ]\r\
+    \n:local GResult \"\$GDay \$GMonth \$GYear\"\r\
+    \n\r\
+    \n# file name for system backup\r\
+    \n:local BackupConf ([/system identity get name].\".backup\")\r\
+    \n\r\
+    \n# file name for config export\r\
+    \n:local ExportConf ([/system identity get name].\".rsc\")\r\
+    \n\r\
+    \n/system backup save name=\$BackupConf\r\
+    \n/export compact file=\$ExportConf\r\
+    \n\r\
+    \n# upload the system backup\r\
+    \n/tool fetch address=\"\$ftphost\" src-path=\$BackupConf user=\"\$ftpuser\"\
+    \_mode=ftp password=\"\$ftppassword\" dst-path=\"\$ftppath/\$GResult-\$Backu\
+    pConf\" upload=yes\r\
+    \n\r\
+    \n# upload the config export\r\
+    \n/tool fetch address=\"\$ftphost\" src-path=\$ExportConf user=\"\$ftpuser\"\
+    \_mode=ftp password=\"\$ftppassword\" dst-path=\"\$ftppath/\$GResult-\$Expor\
+    tConf\" upload=yes\r\
+    \n\r\
+    \n# delay time to finish the upload - increase it if your backup file is big\
+    \r\
+    \n:delay 10s;\r\
+    \n\r\
+    \n:log info message=\"Backup Done\";"

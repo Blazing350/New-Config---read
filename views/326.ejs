@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>326 Config</title>
+        <link rel="stylesheet" href="../CSS/326.css">
+    </head>
+    <body>
+        <div id="main">
+            <div id="head">
+                <a class="head" href="/">Home</a>
+                <a class="head" href="326">326 configuration</a>
+                <a class="head" href="328">328 configuration</a>
+                <a class="head" href="354">354 configuration</a>
+                <a class="head" href="518">518 configuration</a>
+                <a class="head" href="1072">1072 configuration</a>
+                <a class="head" href="2004">2004 configuration</a>
+                <a class="head" href="2216">2216 configuration</a>
+            </div>
+            <div id="subhead">
+                <h1 class="left">326 Configuration</h1>
+                <h1 class="right" style="text-decoration: underline;">Configurations</h1>
+            </div>
+            <div id="set">
+                <div id="form">
+                    <form action="/326" method="POST">
+                        <table id="set326">
+                            <tr>
+                                <td>Switch Name :</td>
+                                <td><input type="text" id="name" name="name" placeholder="ga-atl-mdu1-sw" required></td>
+                            </tr>
+                            <tr>
+                                <td>Switch Ip / Subnet :</td>
+                                <td><input type="text" id="ip" name="ip" placeholder="100.100.100.10/23" required></td>
+                            </tr>
+                            <tr>
+                                <td>Site Name :</td>
+                                <td><input type="text" id="site" name="site" placeholder="Mdu1" required></td>
+                            </tr>
+                        </table>
+                        <p>Vlans for Switch Ports :</p>
+                        <table>
+                            <tr>
+                                <td>ether1 :</td>
+                                <td><input type="text" id="e1" name="e1" onfocus="this.value=''" value="1" required></td>
+                                <td>ether2 : </td>
+                                <td><input type="text" id="e2" name="e2" onfocus="this.value=''" value="1" required></td>
+                            </tr>
+                            <tr>
+                                <td>ether3 :</td>
+                                <td><input type="text" id="e3" name="e3" onfocus="this.value=''" value="1" required></td>
+                                <td>ether4 : </td>
+                                <td><input type="text" id="e4" name="e4" onfocus="this.value=''" value="1" required></td>
+                            </tr>
+                            <tr>
+                                <td>ether5 :</td>
+                                <td><input type="text" id="e5" name="e5" onfocus="this.value=''" value="1" required></td>
+                                <td>ether6 :</td>
+                                <td><input type="text" id="e6" name="e6" onfocus="this.value=''" value="1" required></td> 
+                            </tr>
+                            <tr>
+                                <td>ether7 :</td>
+                                <td><input type="text" id="e7" name="e7" onfocus="this.value=''" value="1" required></td>
+                                <td>ether8 :</td>
+                                <td><input type="text" id="e8" name="e8" onfocus="this.value=''" value="1" required></td> 
+                            </tr>
+                            <tr>
+                                <td>ether9 :</td>
+                                <td><input type="text" id="e9" name="e9" onfocus="this.value=''" value="1" required></td>
+                                <td>ether10 :</td>
+                                <td><input type="text" id="e10" name="e10" onfocus="this.value=''" value="1" required></td>
+                            </tr>
+                            <tr>
+                                <td>ether11 :</td>
+                                <td><input type="text" id="e11" name="e11" onfocus="this.value=''" value="1" required></td>
+                                <td>ether12 :</td>
+                                <td><input type="text" id="e12" name="e12" onfocus="this.value=''" value="1" required></td> 
+                            </tr>
+                            <tr>
+                                <td>ether13 :</td>
+                                <td><input type="text" id="e13" name="e13" onfocus="this.value=''" value="1" required></td>
+                                <td>ether14 :</td>
+                                <td><input type="text" id="e14" name="e14" onfocus="this.value=''" value="1" required></td>
+                            </tr>
+                            <tr>
+                                <td>ether15 :</td>
+                                <td><input type="text" id="e15" name="e15" onfocus="this.value=''" value="1" required></td>
+                                <td>ether16 :</td>
+                                <td><input type="text" id="e16" name="e16" onfocus="this.value=''" value="1" required></td> 
+                            </tr>
+                            <tr>
+                                <td>ether17 :</td>
+                                <td><input type="text" id="e17" name="e17" onfocus="this.value=''" value="1" required></td>
+                                <td>ether18 :</td>
+                                <td><input type="text" id="e18" name="e18" onfocus="this.value=''" value="1" required></td>
+                            </tr>
+                            <tr>
+                                <td>ether19 :</td>
+                                <td><input type="text" id="e19" name="e19" onfocus="this.value=''" value="1" required></td>
+                                <td>ether20 :</td>
+                                <td><input type="text" id="e20" name="e20" onfocus="this.value=''" value="1" required></td>
+                            </tr>
+                            <tr>
+                                <td>ether21 :</td>
+                                <td><input type="text" id="e21" name="e21" onfocus="this.value=''" value="1" required></td>
+                                <td>ether22 :</td>
+                                <td><input type="text" id="e22" name="e22" onfocus="this.value=''" value="1" required></td>
+                            </tr>
+                            <tr>
+                                <td>ether23 :</td>
+                                <td><input type="text" id="e23" name="e23" onfocus="this.value=''" value="1" required></td>
+                                <td>ether24 :</td>
+                                <td><input type="text" id="e24" name="e24" onfocus="this.value=''" value="1" required></td>
+                            </tr>
+                        </table>
+                        <p>Additional vlans for bridge :</p>
+                        <textarea id="bvlans" name="bvlans" placeholder="1001
+1002
+1003
+1004"></textarea>
+                        <p>Unit Numbers :</p>
+                        <table>
+                            <tr>
+                                <td>ether1 :</td>
+                                <td><input type="text" id="c1" name="c1" onfocus="this.value=''"></td>
+                                <td>ether2 :</td>
+                                <td><input type="text" id="c2" name="c2" onfocus="this.value=''"></td>
+                            </tr>
+                            <tr>
+                                <td>ether3 :</td>
+                                <td><input type="text" id="c3" name="c3" onfocus="this.value=''"></td>
+                                <td>ether4 :</td>
+                                <td><input type="text" id="c4" name="c4" onfocus="this.value=''"></td>
+                            </tr>
+                            <tr>
+                                <td>ether5 :</td>
+                                <td><input type="text" id="c5" name="c5" onfocus="this.value=''"></td>
+                                <td>ether6 :</td>
+                                <td><input type="text" id="c6" name="c6" onfocus="this.value=''"></td> 
+                            </tr>
+                            <tr>
+                                <td>ether7 :</td>
+                                <td><input type="text" id="c7" name="c7" onfocus="this.value=''"></td>
+                                <td>ether8 :</td>
+                                <td><input type="text" id="c8" name="c8" onfocus="this.value=''"></td> 
+                            </tr>
+                            <tr>
+                                <td>ether9 :</td>
+                                <td><input type="text" id="c9" name="c9" onfocus="this.value=''"></td>
+                                <td>ether10 :</td>
+                                <td><input type="text" id="c10" name="c10" onfocus="this.value=''"></td>
+                            </tr>
+                            <tr>
+                                <td>ether11 :</td>
+                                <td><input type="text" id="c11" name="c11" onfocus="this.value=''"></td>
+                                <td>ether12 :</td>
+                                <td><input type="text" id="c12" name="c12" onfocus="this.value=''"></td> 
+                            </tr>
+                            <tr>
+                                <td>ether13 :</td>
+                                <td><input type="text" id="c13" name="c13" onfocus="this.value=''"></td>
+                                <td>ether14 :</td>
+                                <td><input type="text" id="c14" name="c14" onfocus="this.value=''"></td>
+                            </tr>
+                            <tr>
+                                <td>ether15 :</td>
+                                <td><input type="text" id="c15" name="c15" onfocus="this.value=''"></td>
+                                <td>ether16 :</td>
+                                <td><input type="text" id="c16" name="c16" onfocus="this.value=''"></td> 
+                            </tr>
+                            <tr>
+                                <td>ether17 :</td>
+                                <td><input type="text" id="c17" name="c17" onfocus="this.value=''"></td>
+                                <td>ether18 :</td>
+                                <td><input type="text" id="c18" name="c18" onfocus="this.value=''"></td>
+                            </tr>
+                            <tr>
+                                <td>ether19 :</td>
+                                <td><input type="text" id="c19" name="c19" onfocus="this.value=''"></td>
+                                <td>ether20 :</td>
+                                <td><input type="text" id="c20" name="c20" onfocus="this.value=''"></td>
+                            </tr>
+                            <tr>
+                                <td>ether21 :</td>
+                                <td><input type="text" id="c21" name="c21" onfocus="this.value=''"></td>
+                                <td>ether22 :</td>
+                                <td><input type="text" id="c22" name="c22" onfocus="this.value=''"></td>
+                            </tr>
+                            <tr>
+                                <td>ether23 :</td>
+                                <td><input type="text" id="c23" name="c23" onfocus="this.value=''"></td>
+                                <td>ether24 :</td>
+                                <td><input type="text" id="c24" name="c24" onfocus="this.value=''"></td>
+                            </tr>
+                        </table>
+                        <button id="btn" name="btn">Create Script</Script></button>
+                    </form>
+                </div>
+                <div id="addName">
+                    <ul id="files">
+                        <% dnames.forEach(element => {%>
+                            <li><%= element.status %></li>
+                        <% }) %>
+                    </ul>
+                    <% if (dnames.length > 0) {%>
+                        <form id="dform" action="/download" method="post">
+                            <button id="download" name="download" type="submit">Download Files</button>
+                        </form>
+                    <% } %>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

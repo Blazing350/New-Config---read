@@ -1,0 +1,16 @@
+add gateway=10.3.12.1 address=10.3.12.0/24 dns-server=199.185.175.9,199.185.174.9
+add gateway=10.3.13.1 address=10.3.13.0/24 dns-server=199.185.175.9,199.185.174.9
+add gateway=10.3.14.1 address=10.3.14.0/23 dns-server=199.185.175.9,199.185.174.9
+add gateway=10.3.1.1 address=10.3.1.0/24 dns-server=199.185.175.9,199.185.174.9
+add gateway=10.3.2.1 address=10.3.2.0/24 dns-server=199.185.175.9,199.185.174.9
+add gateway=10.3.3.1 address=10.3.3.0/24 dns-server=199.185.175.9,199.185.174.9
+add gateway=10.3.4.1 address=10.3.4.0/24 dns-server=199.185.175.9,199.185.174.9
+add gateway=10.3.5.1 address=10.3.5.0/24 dns-server=199.185.175.9,199.185.174.9
+add gateway=10.3.6.1 address=10.3.6.0/24 dns-server=199.185.175.9,199.185.174.9
+add gateway=10.3.7.1 address=10.3.7.0/24 dns-server=199.185.175.9,199.185.174.9
+add gateway=10.3.8.1 address=10.3.8.0/24 dns-server=199.185.175.9,199.185.174.9
+add gateway=10.3.9.1 address=10.3.9.0/24 dns-server=199.185.175.9,199.185.174.9
+add gateway=10.3.10.1 address=10.3.10.0/24 dns-server=199.185.175.9,199.185.174.9
+add gateway=10.3.11.1 address=10.3.11.0/24 dns-server=199.185.175.9,199.185.174.9
+add gateway=10.3.16.1 address=10.3.16.0/24
+##########################################################

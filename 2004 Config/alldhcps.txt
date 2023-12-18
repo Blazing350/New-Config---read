@@ -1,0 +1,21 @@
+
+#DHCP SERVERS#
+/ip dhcp-server
+add disabled=no lease-time=8h name=v50 interface=v50 address-pool=v50
+add disabled=no lease-time=1h name=v75 interface=v75 address-pool=v75
+add disabled=no lease-time=8h name=v100 interface=v100 address-pool=v100
+add disabled=no lease-time=10m name=v111 interface=v111 address-pool=v111
+add disabled=no lease-time=10m name=v112 interface=v112 address-pool=v112
+add disabled=no lease-time=8m name=v299 interface=v299 address-pool=v299
+add disabled=no lease-time=8h name=v300 interface=v300 address-pool=v300
+add disabled=no lease-time=8h name=v301 interface=v301 address-pool=v301
+add disabled=no lease-time=8h name=v302 interface=v302 address-pool=v302
+add disabled=no lease-time=8h name=v303 interface=v303 address-pool=v303
+add disabled=no lease-time=8h name=v304 interface=v304 address-pool=v304
+add disabled=no lease-time=8h name=v305 interface=v305 address-pool=v305
+add disabled=no lease-time=8h name=v306 interface=v306 address-pool=v306
+add disabled=no lease-time=8h name=v307 interface=v307 address-pool=v307
+add disabled=no lease-time=8h name=v308 interface=v308 address-pool=v308
+add disabled=no lease-time=8h name=v309 interface=v309 address-pool=v309
+add disabled=no lease-time=8h name=v310 interface=v310 address-pool=v310
+###############################################################################

@@ -1,0 +1,51 @@
+
+/user print
+/user set 0 password=mv%2^347dI3Y~byk
+/user add name=dude password=dI3Y~byk group=read 
+/user add name=tech password=anywAIRTech244! group=full
+/user add name=unimus group=full password=kuJwSN7WF7EwMeEkYH69Q2b4AwmA2m9rQfB9rvH6d9f
+
+/tool romon set enabled=yes secrets=J@ck3t5rm
+
+#SNMP#
+
+/system ntp client set enabled=yes servers=129.6.15.28
+/system clock set time-zone-name=GMT
+
+/snmp community print
+/snmp community set 0 name=6Khr*c*w!u@4u8La!6
+/snmp set trap-version=2
+/snmp set enabled=yes
+/snmp set location=[/system identity get name]
+/snmp set contact="Support@gigsouth.com"         
+#-----------------------------------------------
+
+#Base Security#
+/ip service disable telnet,ftp,www,api,api-ssl
+/ip service set ssh port=9022
+
+##Input Security##
+add address=vpn2.sys.gigsouth.com list=Allowed 
+add address=10.250.255.0/24 list=Allowed
+add address=199.185.175.250 list=Allowed
+add address=199.185.174.250 list=Allowed
+add address=162.255.95.26 comment="new dc fw" list=Allowed
+
+/ipv6 firewall address-list add address=2605:7b80::/48 list=allowed
+
+#Port Knock CFG 
+/ip firewall filter 
+add action=accept chain=spacer disable=yes comment="Start Knock" 
+add action=add-src-to-address-list address-list=knock-knock1 address-list-timeout=15s chain=input dst-port=12279 protocol=tcp 
+add action=add-src-to-address-list address-list=knock-knock2 address-list-timeout=15s chain=input dst-port=20754 protocol=tcp src-address-list=knock-knock1 
+add action=add-src-to-address-list address-list=Allowed address-list-timeout=2h chain=input dst-port=45307 protocol=udp src-address-list=knock-knock1 
+add action=accept chain=input src-address-list=Allowed 
+add action=drop chain=input dst-port=21,22,23,80,443,8291,8728,8729,9022,9023,9999 log-prefix=Attack protocol=tcp 
+add action=drop chain=input dst-port=21,22,23,80,443,8291,8728,8729,9022,9023,9999 log-prefix=Attack protocol=udp 
+add action=accept chain=spacer disable=yes comment="Stop Knock" 
+
+#<>#Blocks  Change SFP for uplink ports#
+add action=drop chain=forward dst-address=100.64.0.0/10 out-interface=sfp-sfpplus1 disable=yes
+add action=accept chain=forward in-interface=all-vlan out-interface=sfp-sfpplus1 disable=yes
+add action=accept chain=forward in-interface=sfp-sfpplus1 out-interface=all-vlan disable=yes
+add action=drop chain=forward in-interface=all-vlan out-interface=all-vlan disable=yes

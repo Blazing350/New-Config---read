@@ -1,0 +1,2 @@
+\n:local ftppath \"/
+/\"\r\

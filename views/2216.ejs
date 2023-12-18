@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>2216 Config</title>
+        <link rel="stylesheet" href="../CSS/2216.css">
+
+    </head>
+    <body>
+        <div id="main">
+            <div id="head">
+                <a class="head" href="/">Home</a>
+                <a class="head" href="326">326 configuration</a>
+                <a class="head" href="328">328 configuration</a>
+                <a class="head" href="354">354 configuration</a>
+                <a class="head" href="518">518 configuration</a>
+                <a class="head" href="1072">1072 configuration</a>
+                <a class="head" href="2004">2004 configuration</a>
+                <a class="head" href="2216">2216 configuration</a>
+            </div>
+            <div id="subhead">
+                <h1 class="left">2216 Configuration</h1>
+                <h1 class="right" style="text-decoration: underline;">Configurations</h1>
+            </div>
+            <div id="set">
+                <div id="form">
+                    <form action="/2216" method="POST">
+                        <table>
+                            <tr>
+                                <td>Switch Name :</td>
+                                <td><input type="text" id="name" name="name" placeholder="ga-atl-mdu1-aru" required></td>
+                            </tr>
+                            <tr>
+                                <td>Site Name :</td>
+                                <td><input type="text" id="site" name="site" placeholder="Mdu1" required></td>
+                            </tr>
+                            <tr>
+                                <td>Site Static :</td>
+                                <td><input type="text" id="staticip" name="staticip" placeholder="162.255.95.1/29" required></td>
+                            </tr>
+                            <tr>
+                                <td>vlan 111 :</td>
+                                <td><input type="text" id="v111" name="v111" placeholder="100.100.100.1/23" required></td>
+                            </tr>
+                            <tr>
+                                <td>vlan 112 :</td>
+                                <td><input type="text" id="v112" name="v112" placeholder="100.100.102.1/23" required></td>
+                            </tr>
+                            <tr>
+                                <td>sfp1 Ip :</td>
+                                <td><input type="text" id="sfp1ip" name="sfp1ip" placeholder="10.250.12.106/29" required></td>
+                            </tr>
+                            <tr>
+                                <td>ipv6 :</td>
+                                <td><input type="text" id="ipv6" name="ipv6" placeholder="2605:7b80::ffff" required></td>
+                            </tr>
+                            <tr>
+                                <td>Unit Numbers:</td>
+                                <td><textarea id="units" name="units" placeholder="101
+                                    102
+                                    103
+                                    104"></textarea></td>
+                            </tr>
+                        </table>
+                        <button id="btn" name="btn">Create Script</Script></button>
+                    </form>
+                </div>
+                <div id="addName">
+                    <ul id="files">
+                        <% dnames.forEach(element => {%>
+                            <li><%= element.status %></li>
+                        <% }) %>
+                    </ul>
+                    <% if (dnames.length > 0) {%>
+                        <form id="dform" action="/download" method="post">
+                            <button id="download" name="download" type="submit">Download Files</button>
+                        </form>
+                    <% } %>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

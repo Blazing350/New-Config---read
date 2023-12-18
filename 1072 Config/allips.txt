@@ -1,0 +1,15 @@
+add interface=v75 address=10.3.16.1/24 comment="Public Static"
+add interface=v100 address=10.3.13.1/24 comment="NET-Guest"
+add interface=v299 address=10.3.14.1/23 comment="Wired Public"
+add interface=v300 address=10.3.1.1/24 comment="NET-Bldg"
+add interface=v301 address=10.3.2.1/24 comment="Biz-Ctr"
+add interface=v302 address=10.3.3.1/24 comment="Fitness"
+add interface=v303 address=10.3.4.1/24 
+add interface=v304 address=10.3.5.1/24 
+add interface=v305 address=10.3.6.1/24 comment="AV"
+add interface=v306 address=10.3.7.1/24 
+add interface=v307 address=10.3.8.1/24 
+add interface=v308 address=10.3.9.1/24 
+add interface=v309 address=10.3.10.1/24 
+add interface=v310 address=10.3.11.1/24
+#####################################################

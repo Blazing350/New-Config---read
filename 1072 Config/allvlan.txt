@@ -1,0 +1,21 @@
+#VLAN adds# 
+
+/interface vlan
+add interface=sfp-sfpplus8 name=v50 vlan-id=50 comment="NET-Cfg"
+add interface=sfp-sfpplus8 name=v75 vlan-id=75 comment="Public Statics"
+add interface=sfp-sfpplus8 name=v100 vlan-id=100 comment="NET-Guest"
+add interface=sfp-sfpplus8 name=v111 vlan-id=111 comment="NET-Mgmt"
+add interface=sfp-sfpplus8 name=v112 vlan-id=112 comment="Aps"
+add interface=sfp-sfpplus8 name=v299 vlan-id=299 comment="Wired Public"
+add interface=sfp-sfpplus8 name=v300 vlan-id=300 comment="NET-Bldg"
+add interface=sfp-sfpplus8 name=v301 vlan-id=301 comment="Biz-Ctr"
+add interface=sfp-sfpplus8 name=v302 vlan-id=302 comment="Fitness"
+add interface=sfp-sfpplus8 name=v303 vlan-id=303
+add interface=sfp-sfpplus8 name=v304 vlan-id=304
+add interface=sfp-sfpplus8 name=v305 vlan-id=305 comment="AV"
+add interface=sfp-sfpplus8 name=v306 vlan-id=306
+add interface=sfp-sfpplus8 name=v307 vlan-id=307
+add interface=sfp-sfpplus8 name=v308 vlan-id=308
+add interface=sfp-sfpplus8 name=v309 vlan-id=309
+add interface=sfp-sfpplus8 name=v310 vlan-id=310
+#############################################

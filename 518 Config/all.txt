@@ -1,0 +1,69 @@
+#Admin Login#
+/user aaa set use-radius=yes accounting=yes interim-update=5m default-group=full 
+/radius add secret=radj@ck3t5 address=162.255.88.30 timeout=3s
+
+/user print
+/user set 0 password=mv%2^347dI3Y~byk
+/user add name=dude password=dI3Y~byk group=read 
+/user add name=tech password=anywAIRTech244! group=full
+
+/tool romon set enabled=yes secrets=J@ck3t5rm
+
+#SNMP#
+
+/system ntp client set enabled=yes servers=129.6.15.28
+/system clock set time-zone-name=GMT
+
+/snmp community print
+/snmp community set 0 name=6Khr*c*w!u@4u8La!6
+/snmp set trap-version=2
+/snmp set enabled=yes
+/snmp set location=[/system identity get name]
+/snmp set contact="Support@gigsouth.com"         
+#-----------------------------------------------
+
+#Logging#
+
+/system logging action add name=Netmon remote=162.255.88.30 target=remote 
+
+/system logging add topics=critical action=Netmon prefix=[/system identity get name]
+/system logging add topics=interface,warning action=Netmon prefix=[/system identity get name]
+/system logging add topics=interface,info action=Netmon prefix=[/system identity get name]
+/system logging add topics=system,info action=Netmon prefix=[/system identity get name]
+/system logging add topics=script,info action=Netmon prefix=[/system identity get name]
+
+#Base Security#
+
+/ip service disable telnet,ftp,www,api,api-ssl
+/ip service set ssh port=9022
+
+/ip firewall address-list 
+add address=rad1.sys.gigsouth.com list=Allowed 
+add address=rad2.sys.gigsouth.com list=Allowed 
+add address=rad3.sys.gigsouth.com list=Allowed 
+add address=vpn2.sys.gigsouth.com list=Allowed 
+add address=monitor.sys.gigsouth.com list=Allowed 
+add address=netmon.sys.gigsouth.com list=Allowed 
+add address=monitor.proxy.sys.gigsouth.com list=Allowed 
+add address=monitor.proxy2.sys.gigsouth.com list=Allowed 
+add address=ga.atl.off.gigsouth.com list=Allowed 
+add address=ga.atl.digi.br.gigsouth.com list=Allowed 
+add address=10.250.255.0/24 list=Allowed
+add address=199.185.175.250 list=Allowed
+add address=162.255.95.26 comment="new dc fw" list=Allowed
+ 
+#Port Knock CFG 
+
+/ip firewall filter 
+add action=accept chain=spacer disable=yes comment="Start Knock" 
+add action=add-src-to-address-list address-list=knock-knock1 address-list-timeout=15s chain=input dst-port=41951 protocol=udp 
+add action=add-src-to-address-list address-list=knock-knock2 address-list-timeout=15s chain=input dst-port=21211 protocol=tcp src-address-list=knock-knock1 
+add action=add-src-to-address-list address-list=Allowed address-list-timeout=2h chain=input dst-port=36908 protocol=udp src-address-list=knock-knock1 
+add action=accept chain=input src-address-list=Allowed 
+add action=drop chain=input dst-port=21,22,23,80,443,8291,8728,8729,9022,9023,9999 log-prefix=Attack protocol=tcp 
+add action=drop chain=input dst-port=21,22,23,80,443,8291,8728,8729,9022,9023,9999 log-prefix=Attack protocol=udp 
+add action=accept chain=spacer disable=yes comment="Stop Knock" 
+
+##Update Packages#
+/system pack dis 3,4,5,6,7
+/system routerboard settings set auto-upgrade=yes

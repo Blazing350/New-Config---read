@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>328 Config</title>
+        <link rel="stylesheet" href="../CSS/328.css">
+        <script>
+            function required(form) {
+                var vlans = document.getElementById("vlans").value;
+                if(vlans < 1050) {
+                    event.preventDefault();
+                    alert("Minimum vlans = 1050");
+                    return false;
+                } else if(vlans > 1550) {
+                    event.preventDefault();
+                    alert("Maximum vlans = 1550")
+                } else {
+                    return true;
+                }
+            }
+        </script>
+    </head>
+    <body>
+        <div id="main">
+            <div id="head">
+                <a class="head" href="/">Home</a>
+                <a class="head" href="326">326 configuration</a>
+                <a class="head" href="328">328 configuration</a>
+                <a class="head" href="354">354 configuration</a>
+                <a class="head" href="518">518 configuration</a>
+                <a class="head" href="1072">1072 configuration</a>
+                <a class="head" href="2004">2004 configuration</a>
+                <a class="head" href="2216">2216 configuration</a>
+            </div>
+            <div id="subhead">
+                <h1 class="left">328 Configuration</h1>
+                <h1 class="right" style="text-decoration: underline;">Configurations</h1>
+            </div>
+            <div id="set">
+                <div id="form">
+                    <form action="/328" onsubmit="return required(this)" method="POST">
+                        <table>
+                            <tr>
+                                <td>Switch Name :</td>
+                                <td><input type="text" id="name" name="name" placeholder="ga-atl-mdu1-sw" required></td>
+                            </tr>
+                            <tr>
+                                <td>Switch Ip / Subnet :</td>
+                                <td><input type="text" id="ip" name="ip" placeholder="100.100.100.10/23" required></td>
+                            </tr>
+                            <tr>
+                                <td>Site Name :</td>
+                                <td><input type="text" id="site" name="site" placeholder="Mdu1" required></td>
+                            </tr>
+                            <tr>
+                                <td>Number of Vlans :</td>
+                                <td><input type="number" id="vlans" name="vlans" placeholder="1550" required></td>
+                            </tr>
+                        </table>
+                        <button id="btn" name="btn">Create Script</button>
+                    </form>
+                </div>
+                <div id="addName">
+                    <ul id="files">
+                        <% dnames.forEach(element => {%>
+                            <li><%= element.status %></li>
+                        <% }) %>
+                    </ul>
+                    <% if (dnames.length > 0) {%>
+                        <form id="dform" action="/download" method="post">
+                            <button id="download" name="download" type="submit">Download Files</button>
+                        </form>
+                    <% } %>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
