@@ -25,13 +25,54 @@
 /ip service set ssh port=9022
 
 ##Input Security##
+/ip firewall address-list
 add address=vpn2.sys.gigsouth.com list=Allowed 
 add address=10.250.255.0/24 list=Allowed
 add address=199.185.175.250 list=Allowed
 add address=199.185.174.250 list=Allowed
 add address=162.255.95.26 comment="new dc fw" list=Allowed
+add address=10.1.0.0/16 list=siteNetworks
+add address=10.3.0.0/16 list=siteNetworks
 
-/ipv6 firewall address-list add address=2605:7b80::/48 list=allowed
+#IPV6 Firewall#
+/ipv6 firewall address-list
+add address=2605:7b80::/48 list=allowed
+add address=::/128 comment="defconf: unspecified address" list=bad_ipv6
+add address=::1/128 comment="defconf: lo" list=bad_ipv6
+add address=fec0::/10 comment="defconf: site-local" list=bad_ipv6
+add address=::ffff:0.0.0.0/96 comment="defconf: ipv4-mapped" list=bad_ipv6
+add address=::/96 comment="defconf: ipv4 compat" list=bad_ipv6
+add address=100::/64 comment="defconf: discard only " list=bad_ipv6
+add address=2001:db8::/32 comment="defconf: documentation" list=bad_ipv6
+add address=2001:10::/28 comment="defconf: ORCHID" list=bad_ipv6
+add address=3ffe::/16 comment="defconf: 6bone" list=bad_ipv6
+add address=::224.0.0.0/100 comment="defconf: other" list=bad_ipv6
+add address=::127.0.0.0/104 comment="defconf: other" list=bad_ipv6
+add address=::/104 comment="defconf: other" list=bad_ipv6
+add address=::255.0.0.0/104 comment="defconf: other" list=bad_ipv6
+
+/ipv6 firewall filter
+add action=accept chain=input comment="allow network ips" src-address-list=allowed
+add action=drop chain=input comment="defconf: rfc4890 drop ll if hop-limit!=255" dst-address=fe80::/10 hop-limit=not-equal:255 protocol=icmpv6
+add action=accept chain=input comment="defconf: accept established,related,untracked" connection-state=established,related,untracked
+add action=drop chain=input comment="defconf: drop invalid" connection-state=invalid
+add action=accept chain=input comment="defconf: accept ICMPv6" protocol=icmpv6
+add action=accept chain=input comment="defconf: accept UDP traceroute" port=33434-33534 protocol=udp
+add action=accept chain=input comment="defconf: accept DHCPv6-Client prefix delegation." dst-port=546 protocol=udp src-address=fe80::/16
+add action=accept chain=input comment="defconf: accept IKE" dst-port=500,4500 protocol=udp
+add action=accept chain=input comment="defconf: accept ipsec AH" protocol=ipsec-ah
+add action=accept chain=input comment="defconf: accept ipsec ESP" protocol=ipsec-esp
+add action=accept chain=forward comment="defconf: accept established,related,untracked" connection-state=established,related,untracked
+add action=drop chain=forward comment="defconf: drop invalid" connection-state=invalid
+add action=drop chain=forward comment="defconf: drop packets with bad src ipv6" src-address-list=bad_ipv6
+add action=drop chain=forward comment="defconf: drop packets with bad dst ipv6" dst-address-list=bad_ipv6
+add action=drop chain=forward comment="defconf: rfc4890 drop hop-limit=1" hop-limit=equal:1 protocol=icmpv6
+add action=accept chain=forward comment="defconf: accept ICMPv6" protocol=icmpv6
+add action=accept chain=forward comment="defconf: accept HIP" protocol=139
+add action=accept chain=forward comment="defconf: accept IKE" dst-port=500,4500 protocol=udp
+add action=accept chain=forward comment="defconf: accept ipsec AH" protocol=ipsec-ah
+add action=accept chain=forward comment="defconf: accept ipsec ESP" protocol=ipsec-esp
+
 
 #Port Knock CFG 
 /ip firewall filter 
@@ -49,3 +90,12 @@ add action=drop chain=forward dst-address=100.64.0.0/10 out-interface=sfp-sfpplu
 add action=accept chain=forward in-interface=all-vlan out-interface=sfp-sfpplus1 disable=yes
 add action=accept chain=forward in-interface=sfp-sfpplus1 out-interface=all-vlan disable=yes
 add action=drop chain=forward in-interface=all-vlan out-interface=all-vlan disable=yes
+
+/interface list
+add name=lldp
+/interface list member
+add interface=sfp-sfpplus1 list=lldp
+add interface=sfp-sfpplus8 list=lldp
+add interface=ether1 list=lldp
+/ip neighbor discovery-settings
+set discover-interface-list=lldp

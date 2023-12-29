@@ -37,9 +37,12 @@ router.post("/", (req, res) => {
     //var sfp1g = req.body.sfp1g;
     var ipv6 = req.body.ipv6;
     var statefile;
+    let nsfp1 = sfp1ip.substring(0, sfp1ip.length - 3);
+    let gsfp1 = parseInt(nsfp1.substring(nsfp1.length - 2)) - 6;
     let start = "/system routerboard settings set auto-upgrade=yes\n#<>#System ID#\n/system id set name=" + name + 
     "\n#Admin Login#\n/user aaa set use-radius=yes accounting=yes interim-update=5m default-group=read\n" + 
-    "/radius add secret=radj@ck3t5 address=162.255.88.30 timeout=3s src-address=" + staticip.substring(0, staticip.length - 3) + "\n";
+    "/radius add secret=radj@ck3t5 address=162.255.88.30 timeout=3s src-address=" + staticip.substring(0, staticip.length - 3) +
+    "\n/ip firewall filter add action=accept chain=input src-address=" + sfp1ip.substring(0, sfp1ip.length - 5) + gsfp1 + "/29\n";
     let ipstart = "\n#<>#VLAN IPs#\n/ip address\nadd interface=sfp28-1 address=" + sfp1ip + " comment=uplink\n" +
     "add interface=v112 address=" + v112 +  " comment=Aps\nadd interface=v111 address=" + v111 + " comment=NET-Mgmt\n" +
     "add interface=v75 address=" + staticip + " comment=\"Public Statics\"\n";
@@ -140,7 +143,7 @@ router.post("/", (req, res) => {
 // end ip pools //
 
 // ip upnp //
-            await fspromises.appendFile(enddest, "\n#UPNP#\n/ip upnp interfaces\nadd forced-ip=" + staticip.substring(0, staticip.length - 3) + " interface=v75 type=external\n");
+            await fspromises.appendFile(enddest, "\n#UPNP#\n/ip upnp set enabled=yes\n/ip upnp interfaces\nadd forced-ip=" + staticip.substring(0, staticip.length - 3) + " interface=v75 type=external\n");
             for (let i = 0; i < units.length; i++) {
                 await fspromises.appendFile(enddest, "add interface=unit-" + units[i] + " type=internal\n");
             }
@@ -152,7 +155,7 @@ router.post("/", (req, res) => {
             let gstatic = parseInt(nstatic.substring(nstatic.length - 1)) - 1;
             let dhcpstart = "\n\n#<>#DHCP Networks#\n/ip dhcp-server network\nadd gateway=" + 
             v112.substring(0, v112.length - 3) + " address=" + v112.substring(0, v112.length - 4) + "0/23 dns-server=199.185.175.9,199.185.174.9\n" +
-            "add gateway=" + v111.substring(0, v111.length - 3) + " address=" + v111.substring(0, v111.length - 4) + "0/23 dns-server=199.185.175.9,199.185.174.9\n" +
+            "add gateway=" + v111.substring(0, v111.length - 3) + " address=" + v111.substring(0, v111.length - 4) + "0/24 dns-server=199.185.175.9,199.185.174.9\n" +
             "add gateway=" + staticip.substring(0, staticip.length -3) + " address=" + staticip.substring(0, staticip.length - 4) + gstatic + "/29 dns-server=199.185.175.9,199.185.174.9\n";
             await fspromises.appendFile(enddest, dhcpstart + data4);
             if (units.length > 255) {
@@ -170,7 +173,7 @@ router.post("/", (req, res) => {
                 }
             } else if (units.length <= 255) {
                 for (let i = 0; i < units.length;) {
-                    for (let x = 1; x <= units.length; x++) {ether2
+                    for (let x = 1; x <= units.length; x++) {
                         await fspromises.appendFile(enddest, "add gateway=10.1." + x + ".1 address=10.1." + x + ".0/24 dns-server=199.185.175.9,199.185.174.9\n");
                         i++;
                     }
@@ -188,31 +191,30 @@ router.post("/", (req, res) => {
 
 // firewall //
             let fstart = "\n#<>#IP FIREWALL NAT#\n/ip dns set servers=199.185.174.9,199.185.175.9,2001:4860:4860::8888,2606:4700:4700::1111\n" + 
-            "/ip firewall nat add chain=srcnat src-address=10.0.0.0/8 action=src-nat to-addresses=" + staticip.substring(0, staticip.length -3) + "\n\n";
+            "/ip firewall nat add chain=srcnat src-address-list=siteNetworks action=src-nat to-addresses=" + staticip.substring(0, staticip.length -3) + "\n\n";
             await fspromises.appendFile(enddest, fstart);
 // end firewall //
 
 // ipv6 //
-            let ipv6start = "#<IPV6>#\n/ipv6 address\nadd address=" + ipv6 + ":0:8050::1/64 interface=v50\nadd address=" + ipv6 + ":0:8075::1/64 interface=v75\nadd address=" + ipv6 + ":0:8100::1/64 interface=v100\n" + 
-            "add address=" + ipv6 + ":0:8111::1/64 interface=v111\nadd address=" + ipv6 + ":0:8112::1/64 interface=v112\nadd address=" + ipv6 + ":0:8299::1/64 interface=v299\n";
+            let ipv6start = "#<IPV6>#\n/ipv6 address\nadd address=" + ipv6 + ":50::1/64 interface=v50\nadd address=" + ipv6 + ":75::1/64 interface=v75\nadd address=" + ipv6 + ":100::1/64 interface=v100\n" + 
+            "add address=" + ipv6 + ":111::1/64 interface=v111\nadd address=" + ipv6 + ":112::1/64 interface=v112\nadd address=" + ipv6 + ":299::1/64 interface=v299\n";
             await fspromises.appendFile(enddest, ipv6start);
             for (let i = 300; i <= 310; i++) {
-                await fspromises.appendFile(enddest, "add address=" + ipv6 + ":0:8" + i + "::1/64 interface=v" + i + "\n");
+                await fspromises.appendFile(enddest, "add address=" + ipv6 + ":" + i + "::1/64 interface=v" + i + "\n");
             }
             for (let i = 0; i < units.length;) {
                 for (let x = 400; x < vlans; x++) {
-                    await fspromises.appendFile(enddest, "add address=" + ipv6 + ":0:8" + x + "::1/64 interface=unit-" + units[i] + "\n");
+                    await fspromises.appendFile(enddest, "add address=" + ipv6 + ":" + x + "::1/64 interface=unit-" + units[i] + "\n");
                     i++;
                 }
             }
 // end ipv6 //
 
 // ospf //
-            let nsfp1 = sfp1ip.substring(0, sfp1ip.length - 3);
-            let gsfp1 = parseInt(nsfp1.substring(nsfp1.length - 2)) - 6;
             const data6 = await fspromises.readFile("2216 Config/ospf.txt", "utf8");
             await fspromises.appendFile(enddest, data6 + sfp1ip.substring(0, sfp1ip.length - 5) + gsfp1 + "/29 priority=1 type=ptp\n\n");
-            await fspromises.appendFile(enddest, "/ip route add disabled=no distance=250 dst-address=0.0.0.0/0 gateway=" + sfp1ip.substring(0, sfp1ip.length - 5) + (parseInt(nsfp1.substring(nsfp1.length - 2)) - 5) + " pref-src=\"\" routing-table=main scope=30 suppress-hw-offload=no target-scope=10");
+            await fspromises.appendFile(enddest, "/ip route add disabled=no distance=250 dst-address=0.0.0.0/0 gateway=" + sfp1ip.substring(0, sfp1ip.length - 5) + (parseInt(nsfp1.substring(nsfp1.length - 2)) - 5) + " pref-src=\"\" routing-table=main scope=30 suppress-hw-offload=no target-scope=10\n");
+            await fspromises.appendFile(enddest, "/ip firewall address add address=" + v111 + " list=siteNetworks\n/ip firewall address add address=" + v112 + " list=siteNetworks\n\n")
 // end ospf //
 
 // copy file to zip //
