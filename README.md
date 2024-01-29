@@ -1,5 +1,5 @@
 Node JS web server for configuring new Mikrotik switches.
 
-Must use old naming style for script creation to work.
-Name can be changed in .rsc file afterwards.
-Plan of fixing soon.
+Must use old naming style for 326 - 518.
+
+New naming style works for 1027 - 2216.
