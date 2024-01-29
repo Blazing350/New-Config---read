@@ -7,5 +7,5 @@ add disabled=no name=backbone-v3 version=3
 add disabled=no instance=backbone-v2 name=backbone-v2
 add disabled=no instance=backbone-v3 name=backbone-v3
 /routing ospf interface-template
-add area=backbone-v3 auth=md5 auth-key=osj@ck3t5pf cost=10 disabled=yes interfaces=sfp28-1 priority=1 type=ptp
-add area=backbone-v2 auth=md5 auth-key=osj@ck3t5pf cost=10 disabled=yes interfaces=sfp28-1 networks=
+add area=backbone-v3 cost=10 disabled=yes interfaces=sfp28-1 priority=1 type=ptp
+add area=backbone-v2 cost=10 disabled=yes interfaces=sfp28-1 networks=

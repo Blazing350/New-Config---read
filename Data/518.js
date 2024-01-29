@@ -70,13 +70,6 @@ router.post("/", (req, res) => {
             const data0 = await fspromises.readFile("518 Config/all.txt", "utf8");
             await fspromises.writeFile(enddest, start + data0);
 // end start - all //
-
-// backup //
-            const bup1 = await fspromises.readFile("518 Config/backup1.txt", "utf8");
-            await fspromises.appendFile(enddest, "\n\n" + bup1 + bup2);
-            const bup3 = await fspromises.readFile("518 Config/backup3.txt", "utf8");
-            await fspromises.appendFile(enddest, "\n" + bup3);
-// end backup //
             await fspromises.appendFile(enddest, "\n\n#End Config\n/sys reb\ny\n\n");          
 // copy file to zip //
             const dataz = await fspromises.readFile(enddest, "utf8");

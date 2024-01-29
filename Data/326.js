@@ -83,12 +83,6 @@ router.post("/", (req, res) => {
             await fspromises.writeFile(enddest, start);
             await fspromises.appendFile(enddest, data0);
 // end start - all //
-// backup //
-            const bup1 = await fspromises.readFile("326 Config/backup1.txt", "utf8");
-            await fspromises.appendFile(enddest, "\n\n" + bup1 + bup2);
-            const bup3 = await fspromises.readFile("326 Config/backup3.txt", "utf8");
-            await fspromises.appendFile(enddest, "\n" + bup3);
-// end backup //
 // vlans //
             for (let i = 0; i < vlans.length; i++) {
                 await fspromises.appendFile(enddest, "\n/int bridge port set " + i + " pvid=" + vlans[i]);

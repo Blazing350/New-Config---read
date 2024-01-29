@@ -34,38 +34,64 @@ router.post("/", (req, res) => {
     var v111 = req.body.v111;
     var v112 = req.body.v112;
     var sfp1ip = req.body.sfp1ip;
-    //var sfp1g = req.body.sfp1g;
     var ipv6 = req.body.ipv6;
     var statefile;
+    var name2 = name.substring(12, 15) + name.substring(8, 12) + name.substring(3, 7);
+    
+    var sfp1end = sfp1ip.substring(sfp1ip.length - 3, sfp1ip.length);
     let nsfp1 = sfp1ip.substring(0, sfp1ip.length - 3);
-    let gsfp1 = parseInt(nsfp1.substring(nsfp1.length - 2)) - 6;
-    let start = "/system routerboard settings set auto-upgrade=yes\n#<>#System ID#\n/system id set name=" + name + 
-    "\n#Admin Login#\n/user aaa set use-radius=yes accounting=yes interim-update=5m default-group=read\n" + 
-    "/radius add secret=radj@ck3t5 address=162.255.88.30 timeout=3s src-address=" + staticip.substring(0, staticip.length - 3) +
-    "\n/ip firewall filter add action=accept chain=input src-address=" + sfp1ip.substring(0, sfp1ip.length - 5) + gsfp1 + "/29\n";
-    let ipstart = "\n#<>#VLAN IPs#\n/ip address\nadd interface=sfp28-1 address=" + sfp1ip + " comment=uplink\n" +
-    "add interface=v112 address=" + v112 +  " comment=Aps\nadd interface=v111 address=" + v111 + " comment=NET-Mgmt\n" +
-    "add interface=v75 address=" + staticip + " comment=\"Public Statics\"\n";
+    if (sfp1ip.charAt(sfp1ip.length - 3) == "/" && sfp1ip.charAt(sfp1ip.length - 7) == ".") {
+        var sfp1g = nsfp1.substring(nsfp1.length - 3);
+        var sfp1n = sfp1ip.substring(0, sfp1ip.length - 6);
+    }
+    else if (sfp1ip.charAt(sfp1ip.length - 3) == "/" && sfp1ip.charAt(sfp1ip.length - 6) == ".") {
+        sfp1g = nsfp1.substring(nsfp1.length - 2);
+        sfp1n = sfp1ip.substring(0, sfp1ip.length - 5);
+    }
+    else if (sfp1ip.charAt(sfp1ip.length - 3) == "/" && sfp1ip.charAt(sfp1ip.length - 5) == ".") {
+        sfp1g = nsfp1.substring(nsfp1.length - 1);
+        sfp1n = sfp1ip.substring(0, sfp1ip.length - 4);
+    }
+    let gsfp1 = parseInt(sfp1g) - 6;
+    let g2sfp1 = parseInt(sfp1g) - 2;
+
+    let nv1ip = v112.substring(0, v112.length - 5);
+    let end1 = parseInt(nv1ip.substring(nv1ip.length - 1));
+    let nv111ip = v111.substring(0, v111.length - 5);
+    let end11 = parseInt(nv111ip.substring(nv111ip.length - 1));
+
+    let nstatic = staticip.substring(0, staticip.length - 3);
+    let gstatic = parseInt(nstatic.substring(nstatic.length - 1)) - 1;
 
 // file location //
-    if ( name.startsWith("ga")) {statefile = "Georgia";}
-    else if (name.startsWith("al")) {statefile = "Alabama";}
-    else if (name.startsWith("fl")) {statefile = "Florida";}
-    else if (name.startsWith("tx")) {statefile = "Texas";}
-    else if (name.startsWith("sc")) {statefile = "South Carolina";}
-    else if (name.startsWith("nc")) {statefile = "North Carolina";}
+    if ( name2.startsWith("ga")) {statefile = "Georgia";}
+    else if (name2.startsWith("al")) {statefile = "Alabama";}
+    else if (name2.startsWith("fl")) {statefile = "Florida";}
+    else if (name2.startsWith("tx")) {statefile = "Texas";}
+    else if (name2.startsWith("sc")) {statefile = "South Carolina";}
+    else if (name2.startsWith("nc")) {statefile = "North Carolina";}
 
-    let enddest = "/home/pi/Documents/Configurations/Sites/" + statefile + "/" + name.substring(0,11) + " (" + site + ")/" + name + ".rsc";
+    let enddest = "/home/pi/Documents/Configurations/Sites/" + statefile + "/" + name2 + " (" + site + ")/" + name + ".rsc";
+    let enddest1 = "/home/pi/Documents/Configurations/Sites/\"" + statefile + "\"/\"" + name2 + " (" + site + ")\"/" + name + ".rsc";
+    let enddest2 = "/Configurations/Sites/\"" + statefile + "\"/\"" + name2 + " (" + site + ")\"/";
+    let enddest3 = "/home/pi/Documents/Configurations/Sites/\"" + statefile + "\"/\"" + name2 + " (" + site + ")\"";
+    let enddest4 = "/home/pi/Documents/Configurations/Sites/" + statefile + "/" + name2 + " (" + site + ")";
+    let enddest5 = "/home/pi/NewConfig/Temp/Zip/" + name + ".rsc";
+
+/*  let enddest = "/home/pi/Documents/Configurations/Sites/" + statefile + "/" + name.substring(0,11) + " (" + site + ")/" + name + ".rsc";
     let enddest1 = "/home/pi/Documents/Configurations/Sites/\"" + statefile + "\"/\"" + name.substring(0,11) + " (" + site + ")\"/" + name + ".rsc";
     let enddest2 = "/Configurations/Sites/\"" + statefile + "\"/\"" + name.substring(0,11) + " (" + site + ")\"/";
     let enddest3 = "/home/pi/Documents/Configurations/Sites/\"" + statefile + "\"/\"" + name.substring(0,11) + " (" + site + ")\"";
     let enddest4 = "/home/pi/Documents/Configurations/Sites/" + statefile + "/" + name.substring(0,11) + " (" + site + ")";
-    let enddest5 = "/home/pi/NewConfig/Temp/Zip/" + name + ".rsc";
+    let enddest5 = "/home/pi/NewConfig/Temp/Zip/" + name + ".rsc"; */
 // end file location //
 
 // start - all //
     const fileOps = async () => {
         try {
+            let start = "/system routerboard settings set auto-upgrade=yes\n#<>#System ID#\n/system id set name=" + name + 
+            "\n#Admin Login#\n/user aaa set use-radius=yes accounting=yes interim-update=5m default-group=read\n" + 
+            "/radius add secret=radj@ck3t5 address=162.255.88.30 timeout=3s src-address=" + nstatic + "\n";
             const data0 = await fspromises.readFile("2216 Config/all.txt", "utf8");
             await fspromises.writeFile(enddest, start + data0);
 // end start - all //
@@ -75,7 +101,7 @@ router.post("/", (req, res) => {
             await fspromises.appendFile(enddest, "\n\n" + data1);
             for (let i = 0; i < units.length;) {
                 for (let x = 400; x < vlans; x++) {
-                    await fspromises.appendFile(enddest, "add interface=sfp28-12 name=unit-" + units[i] + " vlan-id=" + x + "\n");
+                    await fspromises.appendFile(enddest, "add interface=sfp28-12 name=u" + units[i] + "-v" + x + " vlan-id=" + x + "\n");
                     i++;
                 }
             }
@@ -83,25 +109,28 @@ router.post("/", (req, res) => {
 // end interface vlans //
 
 // ip address // @!
+            let ipstart = "\n#<>#VLAN IPs#\n/ip address\nadd interface=sfp28-1 address=" + sfp1ip + " comment=uplink\n" +
+            "add interface=v112 address=" + v112 +  " comment=Aps\nadd interface=v111 address=" + v111 + " comment=NET-Mgmt\n" +
+            "add interface=v75 address=" + staticip + " comment=\"Public Statics\"\n";
             const data2 = await fspromises.readFile("2216 Config/allips.txt", "utf8");
             await fspromises.appendFile(enddest, ipstart + data2);
             if (units.length > 255) {
                 for (let i = 0; i < 255;) {
                     for (let x = 1; x <= 255; x++) {
-                        await fspromises.appendFile(enddest, "add interface=unit-" + units[i] + " address=10.1." + x + ".1/24\n");
+                        await fspromises.appendFile(enddest, "add interface=u" + units[i] + " address=10.1." + x + ".1/24\n");
                         i++;
                     }
                 }
                 for (let i = 255; i < units.length;) {
                     for (let x = 1; x <= vlans2; x++) {
-                        await fspromises.appendFile(enddest, "add interface=unit-" + units[i] + " address=10.2." + x + ".1/24\n");
+                        await fspromises.appendFile(enddest, "add interface=u" + units[i] + " address=10.2." + x + ".1/24\n");
                         i++;
                     }
                 }
             } else if (units.length <= 255) {
                 for (let i = 0; i < units.length;) {
                     for (let x = 1; x <= units.length; x++) {
-                        await fspromises.appendFile(enddest, "add interface=unit-" + units[i] + " address=10.1." + x + ".1/24\n");
+                        await fspromises.appendFile(enddest, "add interface=u" + units[i] + " address=10.1." + x + ".1/24\n");
                         i++;
                     }
                 }
@@ -111,10 +140,6 @@ router.post("/", (req, res) => {
 
 // ip pools // @!
             const data3 = await fspromises.readFile("2216 Config/allpools.txt", "utf8");
-            let nv1ip = v112.substring(0, v112.length - 5);
-            let end1 = parseInt(nv1ip.substring(nv1ip.length - 1));
-            let nv111ip = v111.substring(0, v111.length - 5);
-            let end11 = parseInt(nv111ip.substring(nv111ip.length - 1));
             let poolstart = "\n\n#<>#VLAN Pool#\n/ip pool\nadd name=v112 ranges=" + 
             nv1ip.substring(0, nv1ip.length - 1) + end1 + ".10-" + nv1ip.substring(0, nv1ip.length - 1) + (end1 + 1) + ".250\n" +
             "add name=v111 ranges=" + nv111ip.substring(0, nv111ip.length - 1) + end11 +  ".100-" + nv111ip.substring(0, nv111ip.length - 1) + end11 + ".250\n";
@@ -143,16 +168,14 @@ router.post("/", (req, res) => {
 // end ip pools //
 
 // ip upnp //
-            await fspromises.appendFile(enddest, "\n#UPNP#\n/ip upnp set enabled=yes\n/ip upnp interfaces\nadd forced-ip=" + staticip.substring(0, staticip.length - 3) + " interface=v75 type=external\n");
+            await fspromises.appendFile(enddest, "\n#UPNP#\n/ip upnp set enabled=yes\n/ip upnp interfaces\nadd forced-ip=" + nstatic + " interface=v75 type=external\n");
             for (let i = 0; i < units.length; i++) {
-                await fspromises.appendFile(enddest, "add interface=unit-" + units[i] + " type=internal\n");
+                await fspromises.appendFile(enddest, "add interface=u-" + units[i] + " type=internal\n");
             }
 //end ip upnp //
 
 // dhcp networks // @!
             const data4 = await fspromises.readFile("2216 Config/alldhcp.txt", "utf8");
-            let nstatic = staticip.substring(0, staticip.length - 3);
-            let gstatic = parseInt(nstatic.substring(nstatic.length - 1)) - 1;
             let dhcpstart = "\n\n#<>#DHCP Networks#\n/ip dhcp-server network\nadd gateway=" + 
             v112.substring(0, v112.length - 3) + " address=" + v112.substring(0, v112.length - 4) + "0/23 dns-server=199.185.175.9,199.185.174.9\n" +
             "add gateway=" + v111.substring(0, v111.length - 3) + " address=" + v111.substring(0, v111.length - 4) + "0/24 dns-server=199.185.175.9,199.185.174.9\n" +
@@ -185,7 +208,7 @@ router.post("/", (req, res) => {
             const data5 = await fspromises.readFile("2216 Config/alldhcps.txt", "utf8");
             await fspromises.appendFile(enddest, data5);
             for (let i = 0; i < units.length; i++) {
-                await fspromises.appendFile(enddest, "add disabled=no lease-time=8h name=unit-" + units[i] + " interface=unit-" + units[i] + " address-pool=unit-" + units[i] + "\n");
+                await fspromises.appendFile(enddest, "add disabled=no lease-time=8h name=unit-" + units[i] + " interface=u" + units[i] + " address-pool=unit-" + units[i] + "\n");
             }
 // end dhcp server //
 
@@ -204,7 +227,7 @@ router.post("/", (req, res) => {
             }
             for (let i = 0; i < units.length;) {
                 for (let x = 400; x < vlans; x++) {
-                    await fspromises.appendFile(enddest, "add address=" + ipv6 + ":" + x + "::1/64 interface=unit-" + units[i] + "\n");
+                    await fspromises.appendFile(enddest, "add address=" + ipv6 + ":" + x + "::1/64 interface=u" + units[i] + "\n");
                     i++;
                 }
             }
@@ -212,9 +235,19 @@ router.post("/", (req, res) => {
 
 // ospf //
             const data6 = await fspromises.readFile("2216 Config/ospf.txt", "utf8");
-            await fspromises.appendFile(enddest, data6 + sfp1ip.substring(0, sfp1ip.length - 5) + gsfp1 + "/29 priority=1 type=ptp\n\n");
-            await fspromises.appendFile(enddest, "/ip route add disabled=no distance=250 dst-address=0.0.0.0/0 gateway=" + sfp1ip.substring(0, sfp1ip.length - 5) + (parseInt(nsfp1.substring(nsfp1.length - 2)) - 5) + " pref-src=\"\" routing-table=main scope=30 suppress-hw-offload=no target-scope=10\n");
-            await fspromises.appendFile(enddest, "/ip firewall address add address=" + v111 + " list=siteNetworks\n/ip firewall address add address=" + v112 + " list=siteNetworks\n\n")
+            if (sfp1end == "/29") {
+                await fspromises.appendFile(enddest, data6 + sfp1n + gsfp1 + "/29 priority=1 type=ptp\n\n");
+                await fspromises.appendFile(enddest, "/ip route add disabled=no distance=250 dst-address=0.0.0.0/0 gateway=" + sfp1n + (parseInt(sfp1g) - 5) + " pref-src=\"\" routing-table=main scope=30 suppress-hw-offload=no target-scope=10\n");
+                await fspromises.appendFile(enddest, "/ip firewall filter add action=accept chain=input src-address=" + sfp1n + gsfp1 + "/29\n");
+            }
+            else if (sfp1end == "/30") {
+                await fspromises.appendFile(enddest, data6 + sfp1n + g2sfp1 + "/30 priority=1 type=ptp\n\n");
+                await fspromises.appendFile(enddest, "/ip route add disabled=no distance=250 dst-address=0.0.0.0/0 gateway=" + sfp1n + (parseInt(sfp1g) - 1) + " pref-src=\"\" routing-table=main scope=30 suppress-hw-offload=no target-scope=10\n");
+                await fspromises.appendFile(enddest, "/ip firewall filter add action=accept chain=input src-address=" + sfp1n + g2sfp1 + "/30\n");
+            }
+            await fspromises.appendFile(enddest, "/routing ospf interface-template add area=backbone-v2 cost=10 disabled=yes interfaces=v75 networks=" + staticip.substring(0, staticip.length - 4) + gstatic + "/29 priority=1 type=broadcast\n");
+            await fspromises.appendFile(enddest, "/ip firewall address add address=" + v111 + " list=siteNetworks\n/ip firewall address add address=" + v112 + " list=siteNetworks\n\n");
+            
 // end ospf //
 
 // copy file to zip //

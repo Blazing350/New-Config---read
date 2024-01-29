@@ -6,6 +6,7 @@
 /user set 0 password=mv%2^347dI3Y~byk
 /user add name=dude password=dI3Y~byk group=read 
 /user add name=tech password=anywAIRTech244! group=full
+/user add name=unimus group=full password=kuJwSN7WF7EwMeEkYH69Q2b4AwmA2m9rQfB9rvH6d9f
 
 /tool romon set enabled=yes secrets=J@ck3t5rm
 
@@ -37,19 +38,10 @@
 /ip service disable telnet,ftp,www,api,api-ssl
 /ip service set ssh port=9022
 
-/ip firewall address-list 
-add address=rad1.sys.gigsouth.com list=Allowed 
-add address=rad2.sys.gigsouth.com list=Allowed 
-add address=rad3.sys.gigsouth.com list=Allowed 
-add address=vpn2.sys.gigsouth.com list=Allowed 
-add address=monitor.sys.gigsouth.com list=Allowed 
-add address=netmon.sys.gigsouth.com list=Allowed 
-add address=monitor.proxy.sys.gigsouth.com list=Allowed 
-add address=monitor.proxy2.sys.gigsouth.com list=Allowed 
-add address=ga.atl.off.gigsouth.com list=Allowed 
-add address=ga.atl.digi.br.gigsouth.com list=Allowed 
+/ip firewall address-list
 add address=10.250.255.0/24 list=Allowed
 add address=199.185.175.250 list=Allowed
+add address=199.185.174.250 list=Allowed
 add address=162.255.95.26 comment="new dc fw" list=Allowed
  
 #Port Knock CFG 

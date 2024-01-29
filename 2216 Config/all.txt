@@ -26,7 +26,6 @@
 
 ##Input Security##
 /ip firewall address-list
-add address=vpn2.sys.gigsouth.com list=Allowed 
 add address=10.250.255.0/24 list=Allowed
 add address=199.185.175.250 list=Allowed
 add address=199.185.174.250 list=Allowed
@@ -84,13 +83,8 @@ add action=add-src-to-address-list address-list=Allowed address-list-timeout=2h 
 add action=accept chain=input src-address-list=Allowed 
 add action=drop chain=input dst-port=21,22,23,80,443,8291,8728,8729,9022,9023,9999 log-prefix=Attack protocol=tcp 
 add action=drop chain=input dst-port=21,22,23,80,443,8291,8728,8729,9022,9023,9999 log-prefix=Attack protocol=udp 
-add action=accept chain=spacer disable=yes comment="Stop Knock" 
-
-#<>#Blocks  Change SFP for uplink ports#
-add action=drop chain=forward dst-address=10.0.0.0/8 out-interface=sfp28-1 disable=yes
-add action=accept chain=forward in-interface=all-vlan out-interface=sfp28-1 disable=yes
-add action=accept chain=forward in-interface=sfp28-1 out-interface=all-vlan disable=yes
-add action=drop chain=forward in-interface=all-vlan out-interface=all-vlan disable=yes
+add action=accept chain=spacer disable=yes comment="Stop Knock"
+add action=drop chain=forward dst-address-list=siteNetworks src-address-list=siteNetworks
 
 /interface list
 add name=lldp

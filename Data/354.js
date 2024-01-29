@@ -78,13 +78,6 @@ router.post("/", (req, res) => {
             await fspromises.appendFile(enddest, data0);
 // end start - all //
 
-// backup //
-            const bup1 = await fspromises.readFile("354 Config/backup1.txt", "utf8");
-            await fspromises.appendFile(enddest, "\n\n" + bup1 + bup2);
-            const bup3 = await fspromises.readFile("354 Config/backup3.txt", "utf8");
-            await fspromises.appendFile(enddest, "\n" + bup3);
-// end backup //
-
 // vlans //
             const data1 = await fspromises.readFile("354 Config/vlansall.txt", "utf8");
             await fspromises.appendFile(enddest, "\n\n" + data1 + "\n");
